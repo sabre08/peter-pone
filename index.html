@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Phone</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: #dce3ed;
+  font-family: Arial, sans-serif; color: #20242b;
+}
+.phone {
+  max-width: 420px; min-height: 100dvh;
+  margin: auto; background: #f7f8fc;
+  overflow: hidden; position: relative;
+}
+.status {
+  height: 35px; padding: 10px 22px 0;
+  display: flex; justify-content: space-between;
+  font-size: 13px; font-weight: bold;
+}
+.screen { display: none; min-height: calc(100dvh - 70px); }
+.screen.active { display: block; }
+.home {
+  color: white; padding: 18px 22px;
+  background: linear-gradient(160deg,#8ca8c8,#d7b9c9 55%,#e8d9c9);
+  position: relative;
+}
+.date { margin-top: 65px; text-align: center; }
+.clock { font-size: 55px; font-weight: 300; }
+.day { font-size: 15px; }
+.apps {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 27px 8px; margin-top: 65px; text-align: center;
+}
+.app {
+  border: 0; background: none; color: inherit;
+  font-size: 12px; cursor: pointer; padding: 0;
+}
+.app-icon {
+  width: 53px; height: 53px; margin: auto auto 7px;
+  border-radius: 16px; display: grid;
+  place-items: center; font-size: 26px;
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 3px 8px #34445a25;
+}
+.dock {
+  margin: 40px 0 12px; padding: 13px;
+  display: flex; justify-content: space-around;
+  border-radius: 24px; background: #ffffff55;
+}
+.dock .app-icon { margin-bottom: 0; }
+.topbar {
+  padding: 18px; display: flex; align-items: center;
+  gap: 15px; background: white; font-size: 20px;
+  font-weight: bold;
+}
+.back {
+  border: 0; background: none; font-size: 25px;
+  cursor: pointer; color: #222;
+}
+.content { padding: 18px; }
+.note { color: #777; text-align: center; font-size: 13px; }
+.chat { display: flex; flex-direction: column; gap: 12px; }
+.bubble {
+  max-width: 82%; padding: 12px 14px;
+  border-radius: 16px; background: white;
+  font-size: 14px; line-height: 1.5;
+}
+.bubble.me { align-self: flex-end; background: #d5e5ff; }
+.list-item {
+  width: 100%; padding: 17px 5px; border: 0;
+  border-bottom: 1px solid #e8e8e8;
+  background: none; text-align: left; font-size: 16px;
+  cursor: pointer;
+}
+.homebar {
+  height: 35px; display: grid; place-items: center;
+  background: white; position: sticky; bottom: 0;
+}
+.homebar button {
+  width: 110px; height: 5px; border: 0;
+  border-radius: 9px; background: #30343a; cursor: pointer;
+}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="status">
+    <span>9:41</span><span>●  ▮▮  ▰</span>
+  </div>
+
+  <section id="home" class="screen home active">
+    <div class="date">
+      <div class="clock">9:41</div>
+      <div class="day">10월 17일 토요일</div>
+    </div>
+
+    <div class="apps">
+      <button class="app" onclick="openApp('kakao')">
+        <div class="app-icon" style="background:#fee500">💬</div>카카오톡
+      </button>
+      <button class="app" onclick="openApp('messages')">
+        <div class="app-icon" style="background:#d8f2e3">✉️</div>메시지
+      </button>
+      <button class="app" onclick="openApp('phone')">
+        <div class="app-icon" style="background:#d9f4df">📞</div>전화
+      </button>
+      <button class="app" onclick="openApp('gallery')">
+        <div class="app-icon" style="background:#f8e4ec">🌄</div>갤러리
+      </button>
+    </div>
+
+    <div class="dock">
+      <button class="app" onclick="openApp('phone')">
+        <div class="app-icon">📞</div>
+      </button>
+      <button class="app" onclick="openApp('messages')">
+        <div class="app-icon">✉️</div>
+      </button>
+      <button class="app" onclick="openApp('kakao')">
+        <div class="app-icon">💬</div>
+      </button>
+    </div>
+  </section>
+
+  <section id="kakao" class="screen">
+    <div class="topbar">
+      <button class="back" onclick="goHome()">‹</button>
+      카카오톡
+    </div>
+    <div class="content">
+      <button class="list-item" onclick="openApp('chat')">
+        🟡 피터 파커　　안 읽은 메시지 2개
+      </button>
+      <p class="note">대화를 눌러 열어 봐.</p>
+    </div>
+  </section>
+
+  <section id="chat" class="screen">
+    <div class="topbar">
+      <button class="back" onclick="openApp('kakao')">‹</button>
+      피터 파커
+    </div>
+    <div class="content chat">
+      <div class="note">오후 9:38</div>
+      <div class="bubble">지금 어디야?</div>
+      <div class="bubble me">집 가는 중.</div>
+      <div class="bubble">거짓말. 아직 뉴욕이잖아.</div>
+      <div class="bubble me">……어떻게 알았어?</div>
+    </div>
+  </section>
+
+  <section id="messages" class="screen">
+    <div class="topbar">
+      <button class="back" onclick="goHome()">‹</button>
+      메시지
+    </div>
+    <div class="content">
+      <button class="list-item" onclick="openApp('sms')">
+        💬 알 수 없는 번호<br>
+        <small>문자 하나가 도착했습니다.</small>
+      </button>
+    </div>
+  </section>
+
+  <section id="sms" class="screen">
+    <div class="topbar">
+      <button class="back" onclick="openApp('messages')">‹</button>
+      알 수 없는 번호
+    </div>
+    <div class="content chat">
+      <div class="note">오늘 오후 9:40</div>
+      <div class="bubble">창밖을 확인해.</div>
+    </div>
+  </section>
+
+  <section id="phone" class="screen">
+    <div class="topbar">
+      <button class="back" onclick="goHome()">‹</button>
+      최근 기록
+    </div>
+    <div class="content">
+      <button class="list-item" onclick="openApp('call')">
+        📞 웨이드 윌슨<br><small>부재중 전화 · 오후 9:39</small>
+      </button>
+    </div>
+  </section>
+
+  <section id="call" class="screen">
+    <div class="content" style="text-align:center;padding-top:100px">
+      <div style="font-size:28px">웨이드 윌슨</div>
+      <p>부재중 전화 3통</p>
+      <button onclick="goHome()" style="border:0;border-radius:25px;padding:14px 24px;background:#d9f4df">
+        홈으로 돌아가기
+      </button>
+    </div>
+  </section>
+
+  <section id="gallery" class="screen">
+    <div class="topbar">
+      <button class="back" onclick="goHome()">‹</button>
+      갤러리
+    </div>
+    <div class="content">
+      <p>저장된 사진이 없습니다.</p>
+      <p class="note">사진 대신 이야기 속 단서를 추가해도 좋아.</p>
+    </div>
+  </section>
+
+  <div class="homebar">
+    <button aria-label="홈으로" onclick="goHome()"></button>
+  </div>
+</div>
+
+<script>
+function openApp(id) {
+  document.querySelectorAll('.screen').forEach(s => {
+    s.classList.remove('active');
+  });
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+function goHome() {
+  openApp('home');
+}
+</script>
+</body>
+</html>
